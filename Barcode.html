@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools MES By Ball.Panu</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <link rel="stylesheet" href="barcode.css">
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- fonts style -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Dosis:400,600,700|Poppins:400,600,700&display=swap"
+        rel="stylesheet" />
+</head>
+
+
+<body>
+    <div class="dropdown">
+        <button class="dropbtn">MENU</button>
+        <div class="dropdown-content">
+            <a href="index.html" target="">Web MES</a>
+            <a href="Barcode.html" target="">Barcode</a>
+            <a href="ranodm.html" target="">Random</a>
+            <a href="https://192.168.44.9/luna/" target="_blank">JumpServer</a>
+        </div>
+      </div>    
+    <div id="1" class="main">
+        <div class="form-container">
+            <h1>Generate Barcode 128</h1>
+
+            <!-- Dropdown to choose BAG or QAG -->
+            <label for="codePrefix"> BAG or QAG</label>
+            <select id="codePrefix">
+                <option value=""></option>
+                <option value="BAG">BAG</option>
+                <option value="QAG">QAG</option>
+            </select>
+
+            <label for="baseCode">Chip Number :</label>
+            <input type="text" id="baseCode" placeholder="Chip Number" required><br>
+
+            <label for="quantity">Unit :</label>
+            <input type="number" id="quantity" placeholder="Enter Unit" required><br>
+
+            <button onclick="startBarcodeGeneration()">Generate Barcodes</button>
+
+            <h2>Show Barcodes:</h2>
+            <div id="barcodeContainer"></div>
+
+            <div class="button-container">
+                <button id="prevButton" style="display:none;" onclick="showPrevBarcode()">Back</button>
+                <button id="nextButton" style="display:none;" onclick="showNextBarcode()">Next</button>
+            </div>
+        </div>
+
+        <script>
+            let barcodes = [];  // Store the generated barcodes
+            let currentIndex = 0;
+
+            function startBarcodeGeneration() {
+                const prefix = document.getElementById('codePrefix').value;  // Get prefix (BAG or QAG)
+                const baseCode = document.getElementById('baseCode').value;
+                const quantity = parseInt(document.getElementById('quantity').value);
+                const container = document.getElementById('barcodeContainer');
+
+                // Clear previous results
+                container.innerHTML = '';
+                barcodes = [];
+                currentIndex = 0;
+                document.getElementById('nextButton').style.display = 'none';  // Hide buttons initially
+                document.getElementById('prevButton').style.display = 'none';
+
+                if (!baseCode || isNaN(quantity) || quantity <= 0) {
+                    alert('Please Enter Chip Number and Enter Unit!');
+                    return;
+                }
+
+                // Convert baseCode to integer part and get baseCode prefix
+                let startNumber = parseInt(baseCode);  // Get the numeric base code
+
+                for (let i = 0; i < quantity; i++) {
+                    // Generate new code by incrementing the startNumber
+                    const code = prefix + (startNumber + i);
+                    barcodes.push(code);  // Store the barcodes for later display
+                }
+
+                // Show the first barcode
+                if (barcodes.length > 0) {
+                    showBarcode(currentIndex);
+                    document.getElementById('nextButton').style.display = 'inline';  // Show next button after generation
+                    updateButtonState();
+                }
+            }
+
+            function showBarcode(index) {
+                const container = document.getElementById('barcodeContainer');
+                container.innerHTML = '';  // Clear the container
+
+                if (index >= 0 && index < barcodes.length) {
+                    const code = barcodes[index];
+                    console.log(`Showing barcode for: ${code}`);
+
+                    // Create an image element for the barcode
+                    const img = document.createElement('img');
+
+                    try {
+                        // Generate barcode and append to the container
+                        JsBarcode(img, code, { format: 'CODE128' });
+                        container.appendChild(img);
+                    } catch (error) {
+                        console.error(`Error generating barcode for ${code}:`, error);
+                    }
+                }
+            }
+
+            function showNextBarcode() {
+                if (currentIndex < barcodes.length - 1) {
+                    currentIndex++;
+                    showBarcode(currentIndex);
+                    updateButtonState();
+                }
+            }
+
+            function showPrevBarcode() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    showBarcode(currentIndex);
+                    updateButtonState();
+                }
+            }
+
+            function updateButtonState() {
+                const nextButton = document.getElementById('nextButton');
+                const prevButton = document.getElementById('prevButton');
+
+                // Disable/Enable next button based on index
+                if (currentIndex >= barcodes.length - 1) {
+                    nextButton.disabled = true;
+                } else {
+                    nextButton.disabled = false;
+                }
+
+                // Disable/Enable prev button based on index
+                if (currentIndex <= 0) {
+                    prevButton.disabled = true;
+                } else {
+                    prevButton.disabled = false;
+                }
+
+                // Show the buttons if there are more than one barcode
+                if (barcodes.length > 1) {
+                    nextButton.style.display = 'inline';
+                    prevButton.style.display = 'inline';
+                }
+            }
+        </script>
+    </div>
+    
+
+  
+
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools MES By Ball.Panu</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <link rel="stylesheet" href="barcode.css">
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- fonts style -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Dosis:400,600,700|Poppins:400,600,700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div class="dropdown">
+        <button class="dropbtn">MENU</button>
+        <div class="dropdown-content">
+            <a href="index.html" target="">Web MES</a>
+            <a href="Barcode.html" target="">Barcode</a>
+            <a href="ranodm.html" target="">Random</a>
+            <a href="https://192.168.44.9/luna/" target="_blank">JumpServer</a>
+        </div>
+      </div>  
+      <div id="2" class="main">
+        <div class="form-container">
+            <h2>Random Password Generator</h2>
+            <label for="username">Enter Username :</label>
+            <input type="text" id="username" placeholder="Enter username" pattern="[A-Z][a-zA-Z]*"
+                title="First letter must be uppercase and only English letters allowed.">
+            <button onclick="generatePassword()">Generate Password</button>
+
+            <p id="password"></p>
+            <button id="copyButton" class="copy-icon" onclick="copyPassword()" style="display:none;">
+                <img src="copy.png" alt="Copy Icon">
+            </button>
+
+            <script>
+                function generatePassword() {
+                    let username = document.getElementById("username").value;
+                    // แปลงตัวแรกเป็นตัวใหญ่
+                    username = username.charAt(0).toUpperCase() + username.slice(1).toLowerCase();
+
+                    // ตรวจสอบให้แน่ใจว่าชื่อผู้ใช้มีความยาวมากกว่า 0 และเป็นไปตามรูปแบบที่กำหนด
+                    const usernamePattern = /^[A-Z][a-zA-Z]*$/;
+                    if (!usernamePattern.test(username)) {
+                        alert("Please enter a valid username.");
+                        return;
+                    }
+
+                    const specialChars = "!@#$%^&*()_+";
+                    const numbers = "0123456789";
+                    let randomPart = "";
+                    let previousType = ""; // เก็บค่าของชนิดตัวก่อนหน้า
+
+                    // ฟังก์ชันสำหรับสุ่มตัวเลขหรืออักษรพิเศษและสลับกัน
+                    function addRandomChar() {
+                        if (previousType === "number") {
+                            randomPart += specialChars[Math.floor(Math.random() * specialChars.length)];
+                            previousType = "special";
+                        } else {
+                            randomPart += numbers[Math.floor(Math.random() * numbers.length)];
+                            previousType = "number";
+                        }
+                    }
+
+                    // เริ่มต้นสุ่ม สลับตัวเลขและอักษรพิเศษ
+                    for (let i = 0; i < 4; i++) {
+                        addRandomChar();
+                    }
+
+                    // ถ้ายังไม่ครบ 8 ตัว ให้สุ่มเพิ่มและสลับไปมา
+                    while ((username + randomPart).length < 8) {
+                        addRandomChar();
+                    }
+
+                    // แสดงผลรหัสผ่านที่สุ่มได้ (username จะอยู่ด้านหน้าเสมอ)
+                    const password = username + randomPart;
+                    document.getElementById("password").textContent = "Generated Password: " + password;
+
+                    // เปิดปุ่มคัดลอก
+                    document.getElementById("copyButton").style.display = "inline";
+                }
+
+                function copyPassword() {
+                    const passwordText = document.getElementById("password").textContent.replace("Generated Password: ", "");
+
+                    // สร้าง textarea เพื่อคัดลอกข้อความ
+                    const textarea = document.createElement("textarea");
+                    textarea.value = passwordText;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(textarea);
+
+                    alert("Copy Success!");
+                }
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>

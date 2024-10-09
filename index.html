@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools MES By Ball.Panu</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <link rel="stylesheet" href="barcode.css">
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- fonts style -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Dosis:400,600,700|Poppins:400,600,700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div class="dropdown">
+        <button class="dropbtn">MENU</button>
+        <div class="dropdown-content">
+            <a href="index.html" target="">Web MES</a>
+            <a href="Barcode.html" target="">Barcode</a>
+            <a href="ranodm.html" target="">Random</a>
+            <a href="https://192.168.44.9/luna/" target="_blank">JumpServer</a>
+        </div>
+    </div>
+    <div id="2" class="main">
+        <div class="form-container">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>WEB</th>
+                        <th>Copy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="http://192.168.44.21/MesLLong/login.do?method=toLoginPage"
+                                target="_blank">http://192.168.44.21/MesLLong/login.do?method=toLoginPage</a></td>
+                        <td><img src="copy.png" class="copy-icon"
+                                onclick="copyToClipboard('http://192.168.44.21/MesLLong/login.do?method=toLoginPage')"
+                                alt="Copy"></td>
+                    </tr>
+                    <tr>
+                        <td><a href="http://192.168.44.22/MesLLong/login.do?method=toLoginPage"
+                                target="_blank">http://192.168.44.22/MesLLong/login.do?method=toLoginPage</a></td>
+                        <td><img src="copy.png" class="copy-icon"
+                                onclick="copyToClipboard('http://192.168.44.22/MesLLong/login.do?method=toLoginPage')"
+                                alt="Copy"></td>
+                    </tr>
+                    <tr>
+                        <td><a href="http://192.168.44.70:8099/MesLLong/login.do?method=toLoginPage"
+                                target="_blank">http://192.168.44.70:8099/MesLLong/login.do?method=toLoginPage</a></td>
+                        <td><img src="copy.png" class="copy-icon"
+                                onclick="copyToClipboard('http://192.168.44.70:8099/MesLLong/login.do?method=toLoginPage')"
+                                alt="Copy"></td>
+                    </tr>
+                    <tr>
+                        <td><a href="http://192.168.44.33:8051/tha-mes/login"
+                                target="_blank">http://192.168.44.33:8051/tha-mes/login</a></td>
+                        <td><img src="copy.png" class="copy-icon"
+                                onclick="copyToClipboard('http://192.168.44.33:8051/tha-mes/login')" alt="Copy"></td>
+                    </tr>
+                    <tr>
+                        <td><a href="http://192.168.44.34:8051/tha-mes/login"
+                                target="_blank">http://192.168.44.34:8051/tha-mes/login</a></td>
+                        <td><img src="copy.png" class="copy-icon"
+                                onclick="copyToClipboard('http://192.168.44.34:8051/tha-mes/login')" alt="Copy"></td>
+                    </tr>
+                    <tr>
+                        <td><a href="http://192.168.44.35/tha-mes/login"
+                                target="_blank">http://192.168.44.35/tha-mes/login</a></td>
+                        <td><img src="copy.png" class="copy-icon"
+                                onclick="copyToClipboard('http://192.168.44.35/tha-mes/login')" alt="Copy"></td>
+                    </tr>
+                    <tr>
+                        <td><a href="http://192.168.44.152/Frame/Login.htm"
+                                target="_blank">http://192.168.44.152/Frame/Login.htm</a></td>
+                        <td><img src="copy.png" class="copy-icon"
+                                onclick="copyToClipboard('http://192.168.44.152/Frame/Login.htm')" alt="Copy"></td>
+                    </tr>
+                    <tr>
+                        <td><a href="http://192.168.44.131:8081/#/" target="_blank">http://192.168.44.131:8081/#/</a>
+                        </td>
+                        <td><img src="copy.png" class="copy-icon"
+                                onclick="copyToClipboard('http://192.168.44.131:8081/#/')" alt="Copy"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <script>
+                function copyToClipboard(text) {
+                    const tempInput = document.createElement('input');
+                    tempInput.style.position = 'absolute';
+                    tempInput.style.left = '-9999px';
+                    tempInput.value = text;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                    alert('URL copied to clipboard: ' + text);
+                }
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>
