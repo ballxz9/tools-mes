@@ -120,6 +120,12 @@ body {
 
 }
 
+.qrmain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .main {
     height: 85vh;
     display: flex;

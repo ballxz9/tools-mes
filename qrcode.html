@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tools MES By Ball.Panu</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <link rel="stylesheet" href="barcode.css">
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- fonts style -->
+    <link
+        href="https://fonts.googleapis.com/css?family=Baloo+Chettan|Dosis:400,600,700|Poppins:400,600,700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div class="dropdown">
+        <button class="dropbtn">MENU</button>
+        <div class="dropdown-content">
+            <a href="index.html" target="">Web MES</a>
+            <a href="ranodm.html" target="">Random</a>
+            <a href="Barcode.html" target="">Barcode</a>
+            <a href="qrcode.html" target="">QR Code</a>
+            <a href="https://192.168.44.9/luna/" target="_blank">JumpServer</a>
+        </div>
+    </div>
+    <div id="2" class="main">
+        <div class="form-container">
+            <h1>Generate QR Code</h1>
+            <input type="text" id="urlInput" placeholder="Enter URL">
+            <button onclick="generateQRCode()">Generate QR Code</button>
+            <br><br>
+            <h2>Show Barcodes:</h2>
+            <div class="qrmain">
+                <div id="qrcode"></div>
+            </div>
+            <br>
+            <button id="downloadBtn" style="display:none;" onclick="downloadQRCode()">Download QR Code</button>
+
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+            <script>
+                function generateQRCode() {
+                    let url = document.getElementById('urlInput').value;
+                    if (!url) {
+                        alert("Please enter a URL");
+                        return;
+                    }
+
+                    // สร้าง QR Code
+                    let qrcodeContainer = document.getElementById('qrcode');
+                    qrcodeContainer.innerHTML = ""; // ล้างเนื้อหาก่อนหน้า
+                    let qrcode = new QRCode(qrcodeContainer, {
+                        text: url,
+                        width: 128,
+                        height: 128
+                    });
+
+                    document.getElementById('downloadBtn').style.display = 'inline';
+                }
+
+                function downloadQRCode() {
+                    let qrcodeCanvas = document.querySelector('#qrcode canvas');
+                    let downloadLink = document.createElement('a');
+                    downloadLink.href = qrcodeCanvas.toDataURL();
+                    downloadLink.download = 'qrcode.png';
+                    downloadLink.click();
+                }
+            </script>
+        </div>
+    </div>
+</body>
+
+</html>
