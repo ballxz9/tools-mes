@@ -218,3 +218,8 @@ button:hover:not(:disabled) {
         flex-direction: column;
     }
 }
+@media only screen and (max-width: 480px) {
+	.site-title {
+		font-size: 25px;
+	}
+}
