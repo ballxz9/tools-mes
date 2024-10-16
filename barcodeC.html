@@ -71,6 +71,12 @@
                     <option value="Z">Z</option>
                 </select><br><br>
 
+                <label for="quantity">Number of Machines(1-12):</label>
+                <input type="number" id="quantity" min="1" max="12" value="12" required><br>
+
+                <label for="detailed">Generate Barcodes Zone C:</label>
+                <input type="checkbox" id="detailed"><br>
+
                 <button type="submit">Generate Barcodes</button>
             </form>
             <br><br>
@@ -92,20 +98,33 @@
                     e.preventDefault();  // ป้องกันการรีเฟรชหน้าเว็บ
                     const name = document.getElementById('name').value;
                     const zone = document.getElementById('zone').value;
+                    const quantity = parseInt(document.getElementById('quantity').value);
+                    const detailed = document.getElementById('detailed').checked;
                     const output = document.getElementById('output');
                     output.innerHTML = '';  // เคลียร์บาร์โค้ดเก่าทั้งหมดก่อน
 
                     let barcodes = [];
-                    for (let i = 1; i <= 12; i++) {
-                        const machine = i < 10 ? `0${i}` : `${i}`;
-                        for (let j = 1; j <= 2; j++) {
-                            barcodes.push(`${name}${zone}${machine}${j}`);
+
+                    // ถ้าติ๊กที่ Checkbox สร้างบาร์โค้ดแบบละเอียด (สองตัวท้าย เช่น 011, 012)
+                    if (detailed) {
+                        for (let i = 1; i <= quantity; i++) {
+                            const machine = i < 10 ? `0${i}` : `${i}`;
+                            for (let j = 1; j <= 2; j++) {
+                                barcodes.push(`${name}${zone}${machine}${j}`);
+                            }
+                        }
+                    }
+                    // ถ้าไม่ได้ติ๊ก Checkbox สร้างบาร์โค้ดแบบธรรมดา (เช่น 01, 02)
+                    else {
+                        for (let i = 1; i <= quantity; i++) {
+                            const machine = i < 10 ? `0${i}` : `${i}`;
+                            barcodes.push(`${name}${zone}${machine}`);
                         }
                     }
 
                     // Pagination variables
                     let currentPage = 1;
-                    const itemsPerPage = 8;
+                    const itemsPerPage = 4;
                     const totalPages = Math.ceil(barcodes.length / itemsPerPage);
 
                     function renderBarcodes(page) {
